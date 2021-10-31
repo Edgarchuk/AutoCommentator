@@ -57,8 +57,14 @@ def getDurationVideo(videoId):
 
     return timeparse(json.loads(json.dumps(response))['items'][0]['contentDetails']['duration'][2:])
 
+def getVideoIds():
+    file = open("videoIds", "r")
+    videos = file.read().splitlines()
+    return videos
+
 def main():
     global youtube
+
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -70,7 +76,7 @@ def main():
     # Settings 
     firstComment = "fisrtComment"
     secondComment = "SecondComment"
-    videoIds = ["NCfjxoaERvI"]
+    videoIds = getVideoIds()
 
     # Get credentials and create an API client
     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
